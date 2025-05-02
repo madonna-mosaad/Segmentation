@@ -68,12 +68,12 @@ class Thresholding:
         obj_mask = ~bg_mask
 
         # parameter to keep track of iterations
-        new_threshold=0
-   
+        new_threshold = 0
+
         for i in range(20):
 
             # update the thresholds
-            previous_threshold=new_threshold
+            previous_threshold = new_threshold
 
             # use the masks to extract object and background pixels
             obj_pixels = output_block[obj_mask]
@@ -91,12 +91,12 @@ class Thresholding:
             bg_mask = output_block <= new_threshold
 
             # if threshold value stops changing, end the loop
-            if (np.abs(previous_threshold-new_threshold)<2):
+            if (np.abs(previous_threshold - new_threshold) < 2):
                 break
 
         # finally threshold the image using the optimally computed threshold
-        output_block[block >= new_threshold] = 255  
-        output_block[block < new_threshold] = 0   
+        output_block[block >= new_threshold] = 255
+        output_block[block < new_threshold] = 0
 
         return output_block
 
@@ -107,15 +107,15 @@ class Thresholding:
 
         # GET histogram, indexed from 0-->255 and values are the frequencies
         histogram, bin_edges = np.histogram(output_block, bins=256, range=(0, 256))
-        total_pixels = np.sum(histogram)  
+        total_pixels = np.sum(histogram)
 
         # Loop over all intensity values (0-->255), each time dividing the histograms into 2 classes at intensity i 
-        for i in range (0,256):
+        for i in range(0, 256):
 
             # compute weights of the 2 classes:
             obj_weight = np.sum(histogram[i:256]) / total_pixels
             bg_weight = np.sum(histogram[0:i]) / total_pixels
-           
+
             # compute mean of the 2 classes:
             obj_intensities = np.sum(histogram[i:256])
             bg_intensities = np.sum(histogram[0:i])
@@ -132,17 +132,16 @@ class Thresholding:
                 bg_mean = 0
 
             # compute variance using the weights and means
-            variances[i]=obj_weight*bg_weight*((obj_mean-bg_mean)**2)
+            variances[i] = obj_weight * bg_weight * ((obj_mean - bg_mean) ** 2)
 
         # Find the index of the maximun variance, this is my intensity threshold value 
-        otsu_threshold=np.argmax(variances)
+        otsu_threshold = np.argmax(variances)
 
         # threshold the image based on the otsu threshold computed
-        output_block[block>=otsu_threshold]=255
-        output_block[block<otsu_threshold]=0
+        output_block[block >= otsu_threshold] = 255
+        output_block[block < otsu_threshold] = 0
 
         return output_block
-
 
     @staticmethod
     def local_thresholding(image, thresholding_method, block_size=30):
@@ -160,4 +159,3 @@ class Thresholding:
                 output_image[i:min(i + block_size, height), j:min(j + block_size, width)] = thresholded_window
 
         return output_image
-    
