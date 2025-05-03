@@ -365,8 +365,6 @@ class Ui_MainWindow(object):
         block_size_layout.addWidget(self.util.createLabel("Block Size:", "color: white;"))
         block_size_layout.addWidget(self.block_size_value_label)
 
-
-
         self.otsu_button = self.util.createButton("Otsu Thresholding", self.button_style)
         self.optimal_button = self.util.createButton("Optimal Thresholding", self.button_style)
         self.spectral_threshold_apply_button = self.util.createButton("Spectral Thresholding", self.button_style)
@@ -388,7 +386,6 @@ class Ui_MainWindow(object):
         self.block_size_slider.setValue(30)
         self.block_size_slider.setSingleStep(2)
         self.block_size_slider.setStyleSheet(self.slider_style)
-
 
         # Add slider widgets with their value displays
         self.page_thresholding_layout.addLayout(block_size_layout)
@@ -484,7 +481,6 @@ class Ui_MainWindow(object):
         self.page_segmentation_layout.addWidget(self.apply_agglomerative_clustering_button)
         self.page_segmentation_layout.addWidget(self.util.createSeparator())
 
-
         self.page_segmentation_layout.addLayout(region_layout)
         self.page_segmentation_layout.addWidget(self.region_growing_tolerance_slider)
 
@@ -510,6 +506,7 @@ class Ui_MainWindow(object):
         if self.page_segmentation_controls not in [self.sidebar_stacked.widget(i) for i in
                                                    range(self.sidebar_stacked.count())]:
             self.sidebar_stacked.addWidget(self.page_segmentation_controls)
+
     # ----------------------------------------------------------------------
     # Retranslate
     # ----------------------------------------------------------------------

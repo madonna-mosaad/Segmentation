@@ -240,4 +240,3 @@ class GUIUtilities:
             child = layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
-

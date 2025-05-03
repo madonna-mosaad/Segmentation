@@ -125,7 +125,6 @@ class MainWindowController:
         self.srv.clear_image(self.ui.processed_groupBox)
         self.srv.set_image_in_groupbox(self.ui.processed_groupBox, self.processed_image)
 
-
     def update_region_growing_tolerance(self):
         """Update tolerance value from slider."""
         self.segmenter.set_tolerance(self.ui.region_growing_tolerance_slider.value())
@@ -192,16 +191,16 @@ class MainWindowController:
 
     def apply_thresholding(self, thresholding_method, mode="Global", block_size=30):
         # ensure image is grayscale
-        gray_image=cv2.cvtColor(self.original_image, cv2.COLOR_BGR2GRAY)
+        gray_image = cv2.cvtColor(self.original_image, cv2.COLOR_BGR2GRAY)
         # extract parameters
         mode = self.ui.threshold_type_combo.currentText()
-        block_size=self.ui.block_size_slider.value()
+        block_size = self.ui.block_size_slider.value()
 
         # call the appropriate function based on mode
-        if mode=="Global":
-            self.processed_image=thresholding_method(gray_image)
-        elif mode=="Local":
-            self.processed_image=Thresholding.local_thresholding(gray_image, thresholding_method, block_size)
+        if mode == "Global":
+            self.processed_image = thresholding_method(gray_image)
+        elif mode == "Local":
+            self.processed_image = Thresholding.local_thresholding(gray_image, thresholding_method, block_size)
 
         self.srv.clear_image(self.ui.processed_groupBox)
         self.srv.set_image_in_groupbox(self.ui.processed_groupBox, self.processed_image)
